@@ -141,8 +141,10 @@ document.formulario.total.value=total;
                 <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Extra Queso<br>
                 <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Barbacoa<br>
                 <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Pollo<br>
-                <button>Obtener TOTAL</button>
+                
                 </form>
+                <button>Obtener TOTAL</button>
+                <br></br>
         
                 
     </table>      
