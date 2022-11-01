@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AE_1_Parte2</title>
+    <style>
+        body {
+          background-color: #aad4f7;
+        }
+        h1 {
+          color: #f64611;
+        }
+        legend {
+          margin-top: 20px;
+          margin-bottom: 10px;
+        }
+      </style>
+
+<script type="application/javascript">
+
+
+// Funcion para validar los campos obligatorios del formulario
+
+function validar(){
+    
+    
+    if( nombre.value.trim() == '' ){//eliminar los blancos laterales
+        alert("El nombre es obligatorio")
+    }
+    if( direccion.value.trim() == '' ){
+        alert("La dirección es obligatoria")
+    }
+    if( telefono.value.trim() == '' ){
+        alert("El telefono es obligatorio")
+    }
+    if( email.value.trim() == '' ){
+        alert("El email es obligatorio")
+    }
+
+    // Recorre los radio buttons para comprobar que esta seleccionado alguno
+    var oki = 0;
+    var ckradio = document.getElementsByName('tama[]');
+    for (var i=0; i < ckradio.length; i++){
+        if(ckradio[i].checked == true){
+        oki = 1;
+        }
+    }
+    // Si no esta seleccionado nos indica que seleccionemos un tamaño
+    if(oki == 0){
+    alert('Indique un Tamaño');
+    return false;
+    }
+    
+    // Recorre los checkboxes de ingredientes para comprobar que esta seleccionado alguno 
+    var ok = 0;
+    var ckbox = document.getElementsByName('ingrediente[]');
+    for (var j=0; j < ckbox.length; j++){
+        if(ckbox[j].checked == true){
+        ok = 1;
+        }
+    }
+    // Si no esta seleccionado nos indica que seleccionemos un ingrediente
+    if(ok == 0){
+    alert('Indique al menos un Ingrediente');
+    return false;
+    }
+    
+           
+}
+
+var total=0;
+
+function sumar(valor) {
+total += valor; 
+document.formulario.total.value=total;
+}
+
+function restar(valor) {
+total-=valor; 
+document.formulario.total.value=total;
+}
+
+
+
+
+</script>
+</head>
+
+    
+<h1>Pedido de Pizzas</h1>
+
+<hr/>
+
+<form name="formulario" id="formulario" action="urlServidor" method="get"> 
+    
+    <input type="button" name="accion" value="Validar" onclick="validar()"/>
+      
+    <table>
+        <h3>DATOS DEL PEDIDO</h3>
+        <tr>
+            <td id="td1">Nombre</td>
+            <td id="td2">
+                <input type="text" name="nombre" id="nombre" autofocus/>
+            </td>
+        </tr>
+        <tr>
+            <td id="td3">Dirección</td>
+            <td id="td4">
+                <input type="text" name="direccion" id="direccion"/>
+            </td>
+        </tr>
+        <tr>
+            <td id="td5">Teléfono</td>
+            <td id="td6">
+                <input type="text" name="telefono" id="telefono"/>
+            </td>
+        </tr>
+        <tr>
+            <td id="td7">Email</td>
+            <td id="td8">
+                <input type="txt" name="email" id="email"/>
+                 
+              
+            </td>
+        
+            <legend>Tamaño</legend>
+                                  
+                <form action="#" onsubmit="return validar();">                      
+                <input type="radio" id="td9" name="tama[]" value="5"> Pizza Pequena 5 €
+                <input type="radio" id="td10" name="tama[]" value="10"> Pizza Mediana 10 €
+                <input type="radio" id="td11" name="tama[]" value="15"> Pizza Grande 15 €
+                </form>
+                <br></br>
+            
+            <legend>Ingredientes</legend>
+            
+                <form action="#" onsubmit="return validar();">
+                <input name="checkbox" type="checkbox" disabled onclick="if (this.checked) sumar(1); else restar(1)" value="checkbox"> Pepperoni (Agotado)<br>                 
+                <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Extra Queso<br>
+                <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Barbacoa<br>
+                <input name="checkbox" type="checkbox" onClick="if (this.checked) sumar(1); else restar(1)" value="checkbox">Pollo<br>
+                <button>Obtener TOTAL</button>
+                </form>
+        
+                
+    </table>      
+    </form>
+    <script>
+        // buscar el <form> y guardarlo en una variable
+        const form = document.querySelector('form');
+  
+        // decir que en el evento enviar se sume el total
+        form.addEventListener('submit', obtenerTotal);
+  
+        function obtenerTotal(event) {
+          // evitar enviar el formulario que ocasiona que se refresque la pagina
+          event.preventDefault();
+  
+          // obtener todos los input radio
+          const formData = new FormData(event.target);
+  
+          // convertir los valores a String, o colocar un 0 si no elegieron algo
+          const tama = parseInt(formData.get('tama[]') || '0', 10);
+          const ingrediente = parseInt(formData.get('ingrediente[]') || '0', 10);
+          
+  
+          const result = tama + total;
+          alert("la suma es:" + result);
+        }
+      </script>
+
+</body>
+
+
+</html>
